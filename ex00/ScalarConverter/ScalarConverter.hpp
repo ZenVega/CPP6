@@ -18,10 +18,8 @@
 enum InputType
 {
 	CHAR,
-	DOUBLE,
-	FLOAT,
-	INT,
 	UNDEFINED,
+	STRING,
 	INF,
 	INF_NEG
 };
@@ -32,6 +30,7 @@ typedef struct s_literal_rep
 	int	   i;
 	float  f;
 	double d;
+	bool   neg;
 } t_literal_rep;
 
 class ScalarConverter

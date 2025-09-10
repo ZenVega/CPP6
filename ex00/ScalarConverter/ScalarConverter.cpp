@@ -12,10 +12,12 @@
 
 #include "ScalarConverter.hpp"
 
-static void printResult(InputType type, void *_)
+static void printResult(InputType type)
 {
-	cout << "int: " << "impossible" << endl;
-	cout << "char: " << "impossible" << endl;
+	cout << "int: "
+		 << "impossible" << endl;
+	cout << "char: "
+		 << "impossible" << endl;
 	if (type == UNDEFINED)
 	{
 		cout << "float: "
@@ -30,52 +32,53 @@ static void printResult(InputType type, void *_)
 		cout << "float: " << f << endl;
 		cout << "double: " << d << endl;
 	}
+}
 
-	static void printResult(InputType type, t_literal_rep & literals)
-	{
-		if (type == UNDEFINED)
-		{
-			cout << "int: "
-				 << "impossible" << endl;
-			cout << "char: "
-				 << "impossible" << endl;
-			cout << "float: "
-				 << "nanf" << endl;
-			cout << "double: "
-				 << "nan" << endl;
-		}
-		cout << "int: " << literals.i << endl;
-		cout << "char: " << literals.c << endl;
-		cout << "float: " << literals.f << endl;
-		cout << "double: " << literals.d << endl;
-	}
+static void printResult(InputType type, string input)
+{
+	cout << "int: "
+		 << stoi(input) << endl;
+	cout << "char: "
+		 << "impossible" << endl;
+	cout << "float: ";
+	if (stoi(input) < 128 && stoi(input) > 31)
+		cout << (char)stoi(input);
+	else
+		cout << "Non displayable";
+	cout << endl;
+	cout << "double: "
+		 << stod(input) << endl;
+}
 
-	static InputType getInitialType(string input, t_literal_rep & literals)
-	{
-		int length = input.length();
-		if (length == 0)
-			return UNDEFINED;
-		if (length == 1)
-		{
-			literals.c = input[0];
-			return CHAR;
-		}
+static InputType getInitialType(string input)
+{
+	int length = input.length();
+	if (length == 0)
 		return UNDEFINED;
-	}
+	if (length == 1)
+		return CHAR;
+	if (input.find("inf"))
+		return (input[0] == '-' ? INF_NEG : INF);
+	return STRING;
+}
 
-	ScalarConverter::ScalarConverter(void){};
-	ScalarConverter::ScalarConverter(const ScalarConverter &other){};
-	ScalarConverter::~ScalarConverter(void){};
-	ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
-	{
-		return *this;
-	};
+ScalarConverter::ScalarConverter(void){};
+ScalarConverter::ScalarConverter(const ScalarConverter &other){};
+ScalarConverter::~ScalarConverter(void){};
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
+{
+	return *this;
+};
 
-	void ScalarConverter::convert(string input)
-	{
-		t_literal_rep literals;
+void ScalarConverter::convert(string input)
+{
+	t_literal_rep literals;
 
-		InputType init_type = getInitialType(input, literals);
-		if (init_type == UNDEFINED)
-			printResult(UNDEFINED, NULL);
-	};
+	InputType init_type = getInitialType(input);
+	if (init_type == UNDEFINED)
+		printResult(UNDEFINED);
+	else if (init_type == INF || init_type == INF_NEG)
+		printResult(init_type);
+	else
+		printResult(STRING, input);
+};
