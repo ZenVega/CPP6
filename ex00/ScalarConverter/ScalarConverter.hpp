@@ -15,6 +15,25 @@
 
 #include "../includes/CONSTANTS.hpp"
 
+enum InputType
+{
+	CHAR,
+	DOUBLE,
+	FLOAT,
+	INT,
+	UNDEFINED,
+	INF,
+	INF_NEG
+};
+
+typedef struct s_literal_rep
+{
+	char   c;
+	int	   i;
+	float  f;
+	double d;
+} t_literal_rep;
+
 class ScalarConverter
 {
 private:
@@ -24,6 +43,6 @@ private:
 	ScalarConverter &operator=(const ScalarConverter &other);
 
 public:
-	void convert(string input);
+	static void convert(string input);
 };
 #endif
