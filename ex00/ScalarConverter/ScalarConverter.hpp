@@ -30,7 +30,6 @@ typedef struct s_literal_rep
 	int	   i;
 	float  f;
 	double d;
-	bool   neg;
 } t_literal_rep;
 
 class ScalarConverter
@@ -42,6 +41,6 @@ private:
 	ScalarConverter &operator=(const ScalarConverter &other);
 
 public:
-	static void convert(string input);
+	static void convert(char *input);
 };
 #endif
