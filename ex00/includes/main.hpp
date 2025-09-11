@@ -13,6 +13,6 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-#include "../Bureaucrat/Bureaucrat.hpp"
+#include "../ScalarConverter/ScalarConverter.hpp"
 
 #endif

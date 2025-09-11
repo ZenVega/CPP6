@@ -12,6 +12,9 @@
 
 #include "ScalarConverter.hpp"
 
+// atoi(str.c_str());
+// atof(str.c_str());
+
 static void printResult(InputType type)
 {
 	cout << "int: "
@@ -37,7 +40,7 @@ static void printResult(InputType type)
 static void printResult(InputType type, string input)
 {
 	cout << "int: "
-		 << stoi(input) << endl;
+		 << atoi(input.c_str()) << endl;
 	cout << "char: "
 		 << "impossible" << endl;
 	cout << "float: ";

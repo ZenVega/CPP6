@@ -19,8 +19,8 @@ CFILES		:=
 vpath %.cpp $(SRC_FOLDER)
 CFILES += main.cpp
 
-vpath %.cpp $(SRC_FOLDER)Bureaucrat
-CFILES += Bureaucrat.cpp
+vpath %.cpp $(SRC_FOLDER)ScalarConverter
+CFILES += ScalarConverter.cpp
 
 OFILES      = $(addprefix $(OBJ_FOLDER), $(notdir $(CFILES:.cpp=.o)))
 

@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
-#include <fstream>
+#include <cstdlib>
 #include <iostream>
 
 using std::cin;
