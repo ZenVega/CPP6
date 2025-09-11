@@ -11,6 +11,32 @@
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <sstream>
+
+#define PREC_FLOAT 6
+#define PREC_DOUB 15
+
+static string format_float(float val)
+{
+	std::stringstream ss;
+	ss.precision(PREC_FLOAT);
+	ss << val;
+	string result = ss.str();
+	while (result.length() - 1 == '0')
+		result.erase(result.length() - 1);
+	return result;
+};
+
+static string format_double(float val)
+{
+	std::stringstream ss;
+	ss.precision(PREC_DOUB);
+	ss << val;
+	string result = ss.str();
+	while (result.length() - 1 == '0')
+		result.erase(result.length() - 1);
+	return result;
+};
 
 static void fill_literals(char *input, t_literal_rep &literals, InputType type)
 {
@@ -64,10 +90,8 @@ static void printResult(t_literal_rep &literals)
 		cout << literals.c << endl;
 	else
 		cout << "impossible" << endl;
-	cout.precision(1);
-	cout << std::fixed << "float: " << literals.f << "f" << endl;
-	cout.precision(1);
-	cout << std::fixed << "double: " << literals.d << endl;
+	cout << std::fixed << "float: " << format_float(literals.f) << "f" << endl;
+	cout << std::fixed << "double: " << format_double(literals.d) << endl;
 }
 
 static InputType getInitialType(char *input)
@@ -81,16 +105,16 @@ static InputType getInitialType(char *input)
 	// find returns npos if not found
 	if (input_str.find("inf") != string::npos)
 		return (input[0] == '-' ? INF_NEG : INF);
-	return STRING;
+	return INT;
 }
 
-ScalarConverter::ScalarConverter(void){};
+ScalarConverter::ScalarConverter(void) {};
 ScalarConverter::ScalarConverter(const ScalarConverter &other)
 {
 	if (&other != this)
 		return;
 };
-ScalarConverter::~ScalarConverter(void){};
+ScalarConverter::~ScalarConverter(void) {};
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 {
 	if (&other != this)

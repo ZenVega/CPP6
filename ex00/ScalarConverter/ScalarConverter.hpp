@@ -19,7 +19,8 @@ enum InputType
 {
 	CHAR,
 	UNDEFINED,
-	STRING,
+	INT,
+	FLOAT,
 	INF,
 	INF_NEG
 };
