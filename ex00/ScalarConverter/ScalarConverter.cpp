@@ -22,18 +22,18 @@ static string format_float(float val)
 	ss.precision(PREC_FLOAT);
 	ss << val;
 	string result = ss.str();
-	while (result.length() - 1 == '0')
+	while (result.length() > 0 && result.length() - 1 == '0')
 		result.erase(result.length() - 1);
 	return result;
 };
 
-static string format_double(float val)
+static string format_double(double val)
 {
 	std::stringstream ss;
 	ss.precision(PREC_DOUB);
 	ss << val;
 	string result = ss.str();
-	while (result.length() - 1 == '0')
+	while (result.length() > 0 && result.length() - 1 == '0')
 		result.erase(result.length() - 1);
 	return result;
 };
@@ -108,13 +108,13 @@ static InputType getInitialType(char *input)
 	return INT;
 }
 
-ScalarConverter::ScalarConverter(void) {};
+ScalarConverter::ScalarConverter(void){};
 ScalarConverter::ScalarConverter(const ScalarConverter &other)
 {
 	if (&other != this)
 		return;
 };
-ScalarConverter::~ScalarConverter(void) {};
+ScalarConverter::~ScalarConverter(void){};
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 {
 	if (&other != this)
