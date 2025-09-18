@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "Data.hpp"
+#include <string>
+using std::string;
 
 Data::Data() :
 	_insect_name("unknown bug"), _num_legs(3), _wings(false){};

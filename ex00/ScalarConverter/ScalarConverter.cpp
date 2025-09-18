@@ -11,10 +11,15 @@
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <iostream>
 #include <sstream>
 
 #define PREC_FLOAT 6
 #define PREC_DOUB 15
+
+using std::cout;
+using std::endl;
+using std::string;
 
 static string format_float(float val)
 {

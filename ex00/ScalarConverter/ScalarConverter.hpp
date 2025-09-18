@@ -13,8 +13,6 @@
 #ifndef SCALAR_CONVERTER_HPP
 #define SCALAR_CONVERTER_HPP
 
-#include "../includes/CONSTANTS.hpp"
-
 enum InputType
 {
 	CHAR,

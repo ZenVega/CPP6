@@ -10,10 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/CONSTANTS.hpp"
-#include "includes/main.hpp"
+#include "A/A.hpp"
+#include "B/B.hpp"
+#include "Base/Base.hpp"
+#include "C/C.hpp"
 #include <cstdlib>
-#include <unistd.h>
+#include <ctime>
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 Base *generate(void)
 {

@@ -10,8 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/CONSTANTS.hpp"
 #include "C.hpp"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 C::C()
 {

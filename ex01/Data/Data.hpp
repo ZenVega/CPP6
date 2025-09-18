@@ -12,7 +12,9 @@
 
 #ifndef DATA_HPP
 #define DATA_HPP
-#include "../includes/CONSTANTS.hpp"
+
+#include <string>
+using std::string;
 
 class Data
 {

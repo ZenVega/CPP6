@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "Base.hpp"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 Base::~Base()
 {

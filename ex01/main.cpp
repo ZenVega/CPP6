@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/main.hpp"
+#include "Data/Data.hpp"
+#include "Serializer/Serializer.hpp"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 int main(void)
 {
