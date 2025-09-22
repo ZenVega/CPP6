@@ -14,6 +14,7 @@
 #define SERIALIZER_HPP
 
 #include "../Data/Data.hpp"
+#include <stdint.h>
 
 class Serializer
 {

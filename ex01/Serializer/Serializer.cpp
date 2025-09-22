@@ -17,6 +17,7 @@
 // It does not check if the pointer type and data pointed by the pointer is same or not.include "Serializer.hpp"
 
 #include "Serializer.hpp"
+#include <stdint.h>
 
 uintptr_t Serializer::serialize(Data *ptr)
 {
