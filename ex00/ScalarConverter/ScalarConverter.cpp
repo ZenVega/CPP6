@@ -24,14 +24,23 @@ using std::string;
 
 static bool allDigits(char *string)
 {
-	bool decimal = false;
+	bool decimal  = false;
+	bool sym_e	  = false;
+	bool sym_plus = false;
+	bool sym_f	  = false;
 	if (string[0] == '-' || string[0] == '+')
 		string++;
 	for (int i = 0; string[i]; i++)
 		if ((string[i] <= 48 || string[i] >= 57))
 		{
-			if (string[i] == '.' && !decimal)
+			if (string[i] == '.' && !decimal && string[i + 1])
 				decimal = true;
+			else if ((string[i] == 'e' || string[i] == 'E') && !sym_e && string[i + 1])
+				sym_e = true;
+			else if ((string[i] == '+' || string[i] == '+') && !sym_plus && string[i + 1])
+				sym_plus = true;
+			else if (string[i] == 'f' && !sym_f && !string[i + 1])
+				sym_f = true;
 			else
 				return false;
 		}
