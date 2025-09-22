@@ -20,7 +20,7 @@ enum InputType
 	INT,
 	FLOAT,
 	INF,
-	INF_NEG
+	NAN
 };
 
 typedef struct s_literal_rep

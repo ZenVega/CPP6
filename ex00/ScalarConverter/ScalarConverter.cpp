@@ -13,6 +13,7 @@
 #include "ScalarConverter.hpp"
 #include <iostream>
 #include <sstream>
+#include <stdlib.h>
 
 #define PREC_FLOAT 6
 #define PREC_DOUB 15
@@ -21,25 +22,30 @@ using std::cout;
 using std::endl;
 using std::string;
 
-static string format_float(float val)
+static bool allDigits(char *string)
 {
-	std::stringstream ss;
-	ss.precision(PREC_FLOAT);
-	ss << val;
-	string result = ss.str();
-	while (result.length() > 0 && result.length() - 1 == '0')
-		result.erase(result.length() - 1);
-	return result;
-};
+	bool decimal = false;
+	if (string[0] == '-' || string[0] == '+')
+		string++;
+	for (int i = 0; string[i]; i++)
+		if ((string[i] <= 48 || string[i] >= 57))
+		{
+			if (string[i] == '.' && !decimal)
+				decimal = true;
+			else
+				return false;
+		}
+	return true;
+}
 
-static string format_double(double val)
+static string format_double(double val, int precision)
 {
 	std::stringstream ss;
-	ss.precision(PREC_DOUB);
+	ss.precision(precision);
 	ss << val;
 	string result = ss.str();
-	while (result.length() > 0 && result.length() - 1 == '0')
-		result.erase(result.length() - 1);
+	if (result.find(".") == string::npos)
+		result.append(".0");
 	return result;
 };
 
@@ -64,53 +70,62 @@ static void fill_literals(char *input, t_literal_rep &literals, InputType type)
 	}
 };
 
-static void printResult(InputType type)
+static void printUndefined(void)
 {
 	cout << "int: "
 		 << "impossible" << endl;
 	cout << "char: "
 		 << "impossible" << endl;
-	if (type == UNDEFINED)
-	{
-		cout << "float: "
-			 << "nanf" << endl;
-		cout << "double: "
-			 << "nan" << endl;
-	}
-	else
-	{
-		string f = (type == INF) ? "+inff" : "-inff";
-		string d = (type == INF) ? "+inf" : "-inf";
-		cout << "float: " << f << endl;
-		cout << "double: " << d << endl;
-	}
+	cout << "float: "
+		 << "nanf" << endl;
+	cout << "double: "
+		 << "nan" << endl;
 }
 
-static void printResult(t_literal_rep &literals)
+static void printResult(t_literal_rep &literals, InputType type)
 {
+	if (type == INF)
+	{
+		cout << "int: "
+			 << "impossible" << endl;
+		cout << "char: "
+			 << "impossible" << endl;
+		cout << std::fixed << "float: " << literals.f << "f" << endl;
+		cout << std::fixed << "double: " << literals.d << endl;
+		return;
+	}
 	cout << "int: "
 		 << literals.i << endl;
 	cout << "char: ";
-	if (literals.c)
+	if (literals.i > 31 && literals.i < 128)
 		cout << literals.c << endl;
+	else if (literals.i <= 31)
+		cout << "not displayable" << endl;
 	else
 		cout << "impossible" << endl;
-	cout << std::fixed << "float: " << format_float(literals.f) << "f" << endl;
-	cout << std::fixed << "double: " << format_double(literals.d) << endl;
+	cout << std::fixed << "float: " << format_double(literals.f, PREC_FLOAT) << "f" << endl;
+	cout << std::fixed << "double: " << format_double(literals.d, PREC_DOUB) << endl;
 }
 
 static InputType getInitialType(char *input)
 {
 	string input_str = input;
 	int	   length	 = input_str.length();
-	if (length == 0)
-		return UNDEFINED;
-	if (length == 1)
-		return CHAR;
-	// find returns npos if not found
 	if (input_str.find("inf") != string::npos)
-		return (input[0] == '-' ? INF_NEG : INF);
-	return INT;
+		return (INF);
+	if (length == 0 || input_str.find("nan") != string::npos)
+		return UNDEFINED;
+	if (length == 1 && input[0] >= ' ' && input[0] <= 126)
+	{
+		if (input[0] >= '0' && input[0] <= '9')
+			return INT;
+		else
+			return CHAR;
+	}
+	if (allDigits(input))
+		return INT;
+	else
+		return UNDEFINED;
 }
 
 ScalarConverter::ScalarConverter(void){};
@@ -119,6 +134,7 @@ ScalarConverter::ScalarConverter(const ScalarConverter &other)
 	if (&other != this)
 		return;
 };
+
 ScalarConverter::~ScalarConverter(void){};
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 {
@@ -133,12 +149,10 @@ void ScalarConverter::convert(char *input)
 
 	InputType init_type = getInitialType(input);
 	if (init_type == UNDEFINED)
-		printResult(UNDEFINED);
-	else if (init_type == INF || init_type == INF_NEG)
-		printResult(init_type);
+		printUndefined();
 	else
 	{
 		fill_literals(input, literals, init_type);
-		printResult(literals);
+		printResult(literals, init_type);
 	}
 };
