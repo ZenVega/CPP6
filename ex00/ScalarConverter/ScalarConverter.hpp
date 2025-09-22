@@ -16,11 +16,9 @@
 enum InputType
 {
 	CHAR,
-	UNDEFINED,
-	INT,
-	FLOAT,
-	INF,
-	NAN
+	SPECIAL,
+	OVER_INT,
+	INT
 };
 
 typedef struct s_literal_rep
