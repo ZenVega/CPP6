@@ -39,7 +39,7 @@ static bool allDigits(char *string)
 				decimal = true;
 			else if ((string[i] == 'e' || string[i] == 'E') && !sym_e && string[i + 1])
 				sym_e = true;
-			else if ((string[i] == '+' || string[i] == '-') && !sym_plus && string[i + 1])
+			else if ((string[i] == '+' || string[i] == '-') && !sym_plus && string[i + 1] && i != 0)
 				sym_plus = true;
 			else if (string[i] == 'f' && !sym_f && !string[i + 1])
 				sym_f = true;
@@ -76,13 +76,27 @@ static string format_double(double val, int precision)
 	return result;
 };
 
-static void printSpecial(char *input)
+static void printSpecial(char *input, InputType type)
 {
 	string str = input;
 	cout
 		<< "char: impossible" << endl;
 	cout << "int: impossible" << endl;
-	if (str[str.size() - 1] == 'f')
+	if (type == INF)
+	{
+		double d = std::strtod(input, NULL);
+		if (d != 0)
+		{
+			cout << "float: " << d << "f" << endl;
+			cout << "double: " << d << endl;
+		}
+		else
+		{
+			cout << "float: nanf" << endl;
+			cout << "double: nan" << endl;
+		}
+	}
+	else if (str[str.size() - 1] == 'f')
 	{
 		cout << "float: " << str << endl;
 		cout << "double: " << str.substr(0, str.size() - 1) << endl;
@@ -166,7 +180,7 @@ static InputType getInitialType(char *input)
 	string input_str = input;
 	int	   length	 = input_str.length();
 	if (input_str.find("inf") != string::npos)
-		return (SPECIAL);
+		return (INF);
 	if (length == 0 || input_str.find("nan") != string::npos)
 		return SPECIAL;
 	if (length == 1 && input[0] >= ' ' && input[0] <= 126)
@@ -197,8 +211,8 @@ void ScalarConverter::convert(char *input)
 	t_literal_rep literals;
 
 	InputType init_type = getInitialType(input);
-	if (init_type == SPECIAL)
-		printSpecial(input);
+	if (init_type == SPECIAL || init_type == INF)
+		printSpecial(input, init_type);
 	else if (init_type == CHAR)
 		printChar(literals, input);
 	else

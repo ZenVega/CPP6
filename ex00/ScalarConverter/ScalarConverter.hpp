@@ -17,7 +17,7 @@ enum InputType
 {
 	CHAR,
 	SPECIAL,
-	OVER_INT,
+	INF,
 	INT
 };
 

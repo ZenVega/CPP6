@@ -19,19 +19,19 @@ using std::endl;
 
 int main(void)
 {
-	Data	  centipede	 = Data("centipede", 1000, 0);
-	Data	  mantis	 = Data("mantis", 6, 1);
-	uintptr_t raw_centi	 = Serializer::serialize(&centipede);
-	uintptr_t raw_mantis = Serializer::serialize(&mantis);
-	cout << "Centipede is now: " << raw_centi << endl;
-	cout << "Mantis is now: " << raw_mantis << endl;
-	Data *centi_clone  = Serializer::deserialize(raw_centi);
-	Data *mantis_clone = Serializer::deserialize(raw_mantis);
+	Data *centipede = new Data("centipede", 1000, 0);
+	Data *mantis	= new Data("mantis", 6, 1);
+	cout << "Centipede addr. is: " << centipede << endl;
+	cout << "Mantis addr. is: " << mantis << endl;
+	uintptr_t raw_centi	   = Serializer::serialize(centipede);
+	uintptr_t raw_mantis   = Serializer::serialize(mantis);
+	Data	 *centi_clone  = Serializer::deserialize(raw_centi);
+	Data	 *mantis_clone = Serializer::deserialize(raw_mantis);
 
-	if (&centipede == centi_clone)
-		cout << "Centipede was deserialized: " << raw_centi << endl;
-	if (&mantis == mantis_clone)
-		cout << "Mantis was deserialized: " << raw_mantis << endl;
+	if (centipede == centi_clone)
+		cout << "Centipede was deserialized: " << centi_clone << endl;
+	if (mantis == mantis_clone)
+		cout << "Mantis was deserialized: " << mantis_clone << endl;
 
 	return 0;
 }
