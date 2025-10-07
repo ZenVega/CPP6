@@ -32,6 +32,8 @@ int main(void)
 		cout << "Centipede was deserialized: " << centi_clone << endl;
 	if (mantis == mantis_clone)
 		cout << "Mantis was deserialized: " << mantis_clone << endl;
+	delete centipede;
+	delete mantis;
 
 	return 0;
 }
