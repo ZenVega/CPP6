@@ -35,7 +35,7 @@ OFILES      = $(addprefix $(OBJ_FOLDER), $(notdir $(CFILES:.cpp=.o)))
 
 CC			= c++
 
-CFLAGS		= -g -Wall -Wextra -Werror -std=c++98 -Wshadow
+CFLAGS		= -g -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME) 
 
