@@ -179,7 +179,7 @@ static InputType getInitialType(char *input)
 {
 	string input_str = input;
 	int	   length	 = input_str.length();
-	if (input_str.find("inf") != string::npos)
+	if (input_str.find("inf") != string::npos && length <= 5 && input_str[length - 1] == 'f')
 		return (INF);
 	if (length == 0 || input_str.find("nan") != string::npos)
 		return SPECIAL;
